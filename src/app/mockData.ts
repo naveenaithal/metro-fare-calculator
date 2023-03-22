@@ -304,6 +304,21 @@ export const mockData = [
         "to": "zone2",
         "dateTime": "2023-03-22T11:47"
     },
+       {
+        "from": "zone2",
+        "to": "zone1",
+        "dateTime": "2023-03-22T09:21"
+    },
+       {
+        "from": "zone2",
+        "to": "zone2",
+        "dateTime": "2023-03-22T12:32"
+    },
+       {
+        "from": "zone1",
+        "to": "zone2",
+        "dateTime": "2023-03-22T16:42"
+    },
     {
         "from": "zone1",
         "to": "zone1",
@@ -311,6 +326,26 @@ export const mockData = [
     },
     {
         "from": "zone1",
+        "to": "zone2",
+        "dateTime": "2023-03-23T08:29"
+    },
+    {
+        "from": "zone2",
+        "to": "zone2",
+        "dateTime": "2023-03-23T12:58"
+    },
+    {
+        "from": "zone1",
+        "to": "zone2",
+        "dateTime": "2023-03-23T16:34"
+    },
+    {
+        "from": "zone2",
+        "to": "zone1",
+        "dateTime": "2023-03-23T18:47"
+    },
+    {
+        "from": "zone2",
         "to": "zone1",
         "dateTime": "2023-03-24T17:47"
     },
@@ -321,11 +356,11 @@ export const mockData = [
     },
     {
         "from": "zone1",
-        "to": "zone1",
+        "to": "zone2",
         "dateTime": "2023-03-24T17:47"
     },
     {
-        "from": "zone1",
+        "from": "zone2",
         "to": "zone1",
         "dateTime": "2023-03-24T17:47"
     },
@@ -333,6 +368,26 @@ export const mockData = [
         "from": "zone2",
         "to": "zone2",
         "dateTime": "2023-03-25T18:12"
+    },
+     {
+        "from": "zone2",
+        "to": "zone2",
+        "dateTime": "2023-03-25T19:12"
+    },
+     {
+        "from": "zone2",
+        "to": "zone2",
+        "dateTime": "2023-03-25T20:12"
+    },
+     {
+        "from": "zone2",
+        "to": "zone2",
+        "dateTime": "2023-03-25T20:30"
+    },
+     {
+        "from": "zone2",
+        "to": "zone2",
+        "dateTime": "2023-03-25T21:42"
     },
       {
         "from": "zone1",

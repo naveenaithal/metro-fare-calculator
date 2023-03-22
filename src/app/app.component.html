@@ -98,14 +98,10 @@
 
       </Table>
 
-      <!-- <div *ngFor="let singleTrip of day" >
-      {{dataTest(weeklyTrip)}}
-      </div> -->
-
+      <div class="text-end" >
+        <span class="fw-bold">Total Spend: {{dayTotalFareCount(day)}}</span>
+      </div>
     </div>
-<div class="text-end" >
-  <!-- <span class="fw-bold">Total Spend: 200</span> -->
-</div>
 
   </div>
 
@@ -130,7 +126,7 @@
 
 
 <div class="text-end" >
-  <!-- <span class="fw-bold">Total Spend: 800</span> -->
+  <span class="fw-bold">Total Spend: {{weeklyTrip[weeklyTrip.length-1].weeklyCapLimit || weeklyTrip[weeklyTrip.length-1].totalCount}}</span>
 </div>
 
   </div>
