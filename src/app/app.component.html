@@ -1,0 +1,132 @@
+ <!-- <a [routerLink]=['/registration']><button class="btn btn-success" > Submit </button></a> -->
+<div class="page-outer-contaienr">
+<div class="header">
+
+  <a routerLink="/about">  <span>About</span></a>
+  <span>Contact</span>
+</div>
+<div class="input-container mt-3 container mb-3">
+  <form #myForm="ngForm">
+
+  <div class="row align-items-end">
+    <div class="col-md-3 col-sm-12">
+      <label class="form-label">Choose  From Zone</label>
+      <select class="select" class="form-select" [(ngModel)]="userInput.from" name="form"    >
+        <option value="zone1">Zone 1</option>
+        <option value="zone2">Zone 2</option>
+      </select>
+    </div>
+    
+    <div class="col-md-3 col-sm-12">
+      <label class="form-label">Choose  To Zone</label>
+      <select class="select" class="form-select" [(ngModel)]="userInput.to" name="to" >
+        <option value="zone1">Zone 1</option>
+        <option value="zone2">Zone 2</option>
+      </select>
+    </div>    
+    <div class="col-md-4 col-sm-12">
+      <label class="form-label">Choose Travel Date and Time</label>
+
+        <input type="datetime-local" id="dateTime" name="dateTime"  class="form-control" [(ngModel)]="userInput.dateTime"    >
+    </div>
+    <div class="col-md-2">
+  <button class="btn btn-primary" style="width:80px"  type="submit" (click)="addTravelDetails()">Add</button>
+
+    </div>
+    
+  </div>
+
+  </form>
+
+  <div class="data-preview-main-container">
+
+  <div *ngIf="travelList.length>0" class="display-preview-container mt-2">
+    <span>From</span>
+    <span>To</span>
+    <span>Date And Time</span>
+  </div>
+  <div  class="display-preview-container-secondary"  *ngFor='let travel of travelList'>
+    <span>{{travel.from}}</span>
+    <span>{{travel.to}}</span>
+    <span>{{dateFormatter(travel.dateTime)}}</span>
+
+  </div>
+  </div>
+      <div class="row mt-2 justify-content-center" style="gap: 20px;">
+        <button class="btn btn-danger" style="width:80px"  type="button" (click)="clearDefaultValue()">Clear</button>
+  <button class="btn btn-primary" [disabled]="this.travelList.length===0" style="width:80px"  type="button" (click)="getFareResult()">Check</button>
+
+  </div>
+<div  *ngIf="isAns"  class="all-result-container">
+
+  <div class="daily-cap-result-container">
+      <h4 class="text-center">Daily Cap Result</h4>
+      
+         <div  *ngFor="let day of this.dailyTrip  let i=index">
+<h4 class="text-center">Day {{i+1}}</h4>
+
+    <Table class="table table-striped">
+        <thead class="fixed-table-header">
+          <th>Day</th>
+          <th>Time</th>
+          <th>From Zone</th>
+          <th>To Zone</th>
+          <th>Calculated Fare</th>
+          <th>Explanation</th>
+          <th>Saved</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let singleTrip of day" >
+<td>{{getDayByDate(singleTrip.dateTime)}}</td>
+<td>{{getTimeByDate(singleTrip.dateTime)}}</td>
+<td>{{singleTrip.from}}</td>
+<td>{{singleTrip.to}}</td>
+<td>{{singleTrip.calculatedFare}}</td>
+<td>{{singleTrip.info}}</td>
+<td>{{singleTrip.saved || 0}}</td>
+          </tr>
+        </tbody>
+
+      </Table>
+
+      <!-- <div *ngFor="let singleTrip of day" >
+      {{dataTest(weeklyTrip)}}
+      </div> -->
+
+    </div>
+<div class="text-end" >
+  <!-- <span class="fw-bold">Total Spend: 200</span> -->
+</div>
+
+  </div>
+
+  <div class="weekly-cap-result-container mt-4">
+      <h4 class="text-center">Weekly Cap</h4>
+  <Table class="table table-striped">
+        <thead>
+          <th>Day</th>
+          <th>Zones</th>
+          <th>Calculated Fare</th>
+          <th>Explanation</th>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let weeklySingleDayTip of weeklyTrip" >
+<td>{{getDayByDate(weeklySingleDayTip.dateTime)}}</td>
+<td>{{weeklySingleDayTip.zones}}</td>
+<td>{{weeklySingleDayTip.calculatedFare}}</td>
+<td>{{weeklySingleDayTip.info}}</td>
+          </tr>
+        </tbody>
+      </Table>
+
+
+<div class="text-end" >
+  <!-- <span class="fw-bold">Total Spend: 800</span> -->
+</div>
+
+  </div>
+</div>
+
+  </div>
+
+</div>

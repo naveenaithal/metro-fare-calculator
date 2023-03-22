@@ -1,0 +1,30 @@
+
+.user-guide-main-text{
+        background: #ededed;
+    padding: 20px;
+    font-family: sans-serif;
+    text-align: justify;
+}
+
+.image-style{
+        border: 2px solid black;
+     width: 30%;
+    height: 230px;
+          margin-top: 10px;
+    margin-bottom: 10px;
+        
+}
+
+.user-guid-main-container{
+    margin-top: 20px;
+        font-size: 14px;
+    font-family: sans-serif;
+    text-align: justify;
+  
+}
+
+.image-container{
+        display: flex;
+        width: auto !important;
+    justify-content: space-around;
+}
