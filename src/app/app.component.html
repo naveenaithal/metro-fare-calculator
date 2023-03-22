@@ -1,11 +1,17 @@
  <!-- <a [routerLink]=['/registration']><button class="btn btn-success" > Submit </button></a> -->
-<div class="page-outer-contaienr">
-<div class="header">
-
-  <a routerLink="/about">  <span>About</span></a>
-  <span>Contact</span>
-</div>
-<div class="input-container mt-3 container mb-3">
+ <div class="header">
+ <img  style="height:40px;" src="../assets//JKTech-Logo.png">
+  <div class="d-flex" style="gap:10px" >
+     <a routerLink="/about" style="text-decoration: none;"   >  <span>About</span></a>
+   <span  ><a href="mailto:naveenaithal44@gmail.com" style="text-decoration: none;">Contact </a></span>
+  </div>
+ </div>
+ <h4 class="text-center mt-3">Metro Fare Calculator</h4>
+ <div class="page-outer-container">
+  <div class="row  justify-content-end">
+   <button class="btn btn-secondary btn-sm" style="width: 100px;"  (click)="addMockData()" >  Mock Data</button>
+  </div>
+<div class="input-container mt-3  mb-3">
   <form #myForm="ngForm">
 
   <div class="row align-items-end">
@@ -57,10 +63,13 @@
   <button class="btn btn-primary" [disabled]="this.travelList.length===0" style="width:80px"  type="button" (click)="getFareResult()">Check</button>
 
   </div>
+
+
+
 <div  *ngIf="isAns"  class="all-result-container">
 
   <div class="daily-cap-result-container">
-      <h4 class="text-center">Daily Cap Result</h4>
+      <h4 class="text-center">Daily Cap</h4>
       
          <div  *ngFor="let day of this.dailyTrip  let i=index">
 <h4 class="text-center">Day {{i+1}}</h4>
@@ -100,10 +109,10 @@
 
   </div>
 
-  <div class="weekly-cap-result-container mt-4">
+  <div class="weekly-cap-result-container">
       <h4 class="text-center">Weekly Cap</h4>
   <Table class="table table-striped">
-        <thead>
+        <thead  class="fixed-table-header">
           <th>Day</th>
           <th>Zones</th>
           <th>Calculated Fare</th>

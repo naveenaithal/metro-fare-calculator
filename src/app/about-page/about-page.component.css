@@ -28,3 +28,18 @@
         width: auto !important;
     justify-content: space-around;
 }
+
+.note-container{
+    background-color: #ededed;
+    font-family: sans-serif;
+    padding: 4px;
+    width: fit-content;
+
+}
+.note-title{
+    font-size: 14px;
+    color: red;
+}
+.note-content{
+    font-size: 12px;
+}

@@ -3,7 +3,7 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: space-between;
     gap: 20px;
     padding: 30px;
 }
@@ -32,6 +32,8 @@
 
 .weekly-cap-result-container{
     margin: 10px;
+        height: 450px;
+overflow-y: scroll;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
     padding: 20px;
 }
@@ -50,4 +52,13 @@
 .data-preview-main-container{
     height: 300px;
     overflow-y: scroll;
+}
+
+.all-result-container{
+    /* padding: 20px; */
+    display: flex;
+    justify-content: center;
+}
+.page-outer-container{
+    padding: 20px;
 }
