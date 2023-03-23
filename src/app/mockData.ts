@@ -179,7 +179,7 @@ export const dailyTrip=[
   ]
 ]
 
-export const weeklyTrip=  [
+export const weeklyTrip= [
   {
     calculatedFare: 100,
     zones: 'zone1-zone1',
@@ -393,5 +393,10 @@ export const mockData = [
         "from": "zone1",
         "to": "zone2",
         "dateTime": "2023-03-26T09:12"
+    },
+      {
+        "from": "zone1",
+        "to": "zone2",
+        "dateTime": "2023-03-26T17:12"
     }
 ]

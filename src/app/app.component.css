@@ -43,6 +43,13 @@ overflow-y: scroll;
     top: -1px;
     z-index: 1000;
     background: white;
+    /* text-align: center; */
+}
+.info-td{
+        white-space: pre-line;
+/* text-align: justify; */
+width: 300px;
+    font-family: sans-serif;
 }
 
 .page-outer-contaienr{

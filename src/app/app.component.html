@@ -78,10 +78,10 @@
         <thead class="fixed-table-header">
           <th>Day</th>
           <th>Time</th>
-          <th>From Zone</th>
-          <th>To Zone</th>
+          <th>From </th>
+          <th>To </th>
           <th>Calculated Fare</th>
-          <th>Explanation</th>
+          <th class="text-center">Explanation</th>
           <th>Saved</th>
         </thead>
         <tbody>
@@ -90,9 +90,9 @@
 <td>{{getTimeByDate(singleTrip.dateTime)}}</td>
 <td>{{singleTrip.from}}</td>
 <td>{{singleTrip.to}}</td>
-<td>{{singleTrip.calculatedFare}}</td>
-<td>{{singleTrip.info}}</td>
-<td>{{singleTrip.saved || 0}}</td>
+<td>{{singleTripWeeklyFareChecker(singleTrip)}}</td>
+<td class="info-td">{{singleTrip.info}}</td>
+<td>{{singleTripWeeklySavedChecker(singleTrip) || 0}}</td>
           </tr>
         </tbody>
 
@@ -112,14 +112,14 @@
           <th>Day</th>
           <th>Zones</th>
           <th>Calculated Fare</th>
-          <th>Explanation</th>
+          <th class="text-center">Explanation</th>
         </thead>
         <tbody>
           <tr  *ngFor="let weeklySingleDayTip of weeklyTrip" >
 <td>{{getDayByDate(weeklySingleDayTip.dateTime)}}</td>
 <td>{{weeklySingleDayTip.zones}}</td>
 <td>{{weeklySingleDayTip.calculatedFare}}</td>
-<td>{{weeklySingleDayTip.info}}</td>
+<td  class="info-td">{{weeklySingleDayTip.info}}</td>
           </tr>
         </tbody>
       </Table>

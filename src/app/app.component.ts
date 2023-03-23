@@ -112,7 +112,7 @@ function weeklyIsInterZone(data:any) {
   });
 }
 
-let result = data.reduce((arr:any, trip:any, index:number) => {
+let rawDataFareCalculator = data.reduce((arr:any, trip:any, index:number) => {
   let { from, to, dateTime } = trip;
   let time = dateTime.split("T")[1];
   let [hr, min] = time.split(":");
@@ -359,7 +359,7 @@ let result = data.reduce((arr:any, trip:any, index:number) => {
 
 // console.log(result)
 
-let finRes = result.reduce((obj:any, trip:any) => {
+let weekToDayAggregation = rawDataFareCalculator.reduce((obj:any, trip:any) => {
   let { from, to, dateTime, calculatedFare,info } = trip;
   let time = dateTime.split("T")[1];
   let date = dateTime.split("T")[0];
@@ -376,10 +376,12 @@ let finRes = result.reduce((obj:any, trip:any) => {
 
 
 let dailySpendArr:any = [];
-let weeklyCap:any = Object.values(finRes).reduce((obj:any, dayTrip:any) => {
+let weeklyCapObject:any = Object.values(weekToDayAggregation).reduce((obj:any, dayTrip:any) => {
   // console.log(dayTrip)
 
-  let dailySpend = dayTrip.reduce((obj:any, trip:any, i:number) => {
+
+  // daily spend start
+  let dailySpend = dayTrip.reduce((singleDayIndividualTrip:any, trip:any, i:number) => {
     let { from, to, dateTime, calculatedFare, dailyCapReached } = trip;
     //  console.log(dailyCapReached)
     let time = dateTime.split("T")[1];
@@ -392,17 +394,17 @@ let weeklyCap:any = Object.values(finRes).reduce((obj:any, dayTrip:any) => {
       if (i === 0) {
         totalFare = calculatedFare;
       } else {
-        totalFare = calculatedFare + obj[i - 1].totalFare;
+        totalFare = calculatedFare + singleDayIndividualTrip[i - 1].totalFare;
       }
 
       if (totalFare >= 120) {
         if (totalFare > 120) {
-          let payalbeAmount = 120 - obj[i - 1].totalFare;
+          let payalbeAmount = 120 - singleDayIndividualTrip[i - 1].totalFare;
 
           if (payalbeAmount < 0) {
             payalbeAmount = 0;
           }
-          let info = `Daily Cap reached 120 reached for zone 1-2 charged ${payalbeAmount} insted of  ${calculatedFare}`;
+          let info = `Daily Cap of 120  reached for zone 1-2 charged ${payalbeAmount} instead of  ${calculatedFare}`;
 
           let newTrip = {
             ...trip,
@@ -413,7 +415,7 @@ let weeklyCap:any = Object.values(finRes).reduce((obj:any, dayTrip:any) => {
             dailyCapReached: true,
             dailyCapLimit
           };
-          obj.push(newTrip);
+          singleDayIndividualTrip.push(newTrip);
         } else {
           let info = `Daily Cap  120  reached for zone 1-2 `;
           let newTrip = {
@@ -425,11 +427,11 @@ let weeklyCap:any = Object.values(finRes).reduce((obj:any, dayTrip:any) => {
             dailyCapReached: true,
             dailyCapLimit
           };
-          obj.push(newTrip);
+          singleDayIndividualTrip.push(newTrip);
         }
       } else {
         let newTrip = { ...trip, totalFare };
-        obj.push(newTrip);
+        singleDayIndividualTrip.push(newTrip);
       }
     } else if (isSomeZone2(dayTrip)) {
              let dailyCapLimit=80
@@ -438,17 +440,17 @@ let weeklyCap:any = Object.values(finRes).reduce((obj:any, dayTrip:any) => {
       if (i === 0) {
         totalFare = calculatedFare;
       } else {
-        totalFare = calculatedFare + obj[i - 1].totalFare;
+        totalFare = calculatedFare + singleDayIndividualTrip[i - 1].totalFare;
       }
 
       if (totalFare >= 80) {
         if (totalFare > 80) {
-          let payalbeAmount = 80 - obj[i - 1].totalFare;
+          let payalbeAmount = 80 - singleDayIndividualTrip[i - 1].totalFare;
 
           if (payalbeAmount < 0) {
             payalbeAmount = 0;
           }
-          let info = `Daily Cap reached 80 reached for zone 2-2 charged ${payalbeAmount} insted pf  ${calculatedFare}`;
+          let info = `Daily Cap of 80 reached for zone 2-2 charged ${payalbeAmount} instead of  ${calculatedFare}`;
           let newTrip = {
             ...trip,
             totalFare,
@@ -458,9 +460,9 @@ let weeklyCap:any = Object.values(finRes).reduce((obj:any, dayTrip:any) => {
             dailyCapReached: true,
             dailyCapLimit
           };
-          obj.push(newTrip);
+          singleDayIndividualTrip.push(newTrip);
         } else {
-          let info = `Daily Cap  80  reached for zone 2-2 `;
+          let info = `Daily Cap of 80  reached for zone 2-2 `;
           let newTrip = {
             ...trip,
             totalFare,
@@ -470,11 +472,11 @@ let weeklyCap:any = Object.values(finRes).reduce((obj:any, dayTrip:any) => {
             dailyCapReached: true,
             dailyCapLimit
           };
-          obj.push(newTrip);
+          singleDayIndividualTrip.push(newTrip);
         }
       } else {
         let newTrip = { ...trip, totalFare };
-        obj.push(newTrip);
+        singleDayIndividualTrip.push(newTrip);
       }
     } else if (isAllZone1(dayTrip)) {
       let dailyCapLimit=100
@@ -483,17 +485,17 @@ let weeklyCap:any = Object.values(finRes).reduce((obj:any, dayTrip:any) => {
       if (i === 0) {
         totalFare = calculatedFare;
       } else {
-        totalFare = calculatedFare + obj[i - 1].totalFare;
+        totalFare = calculatedFare + singleDayIndividualTrip[i - 1].totalFare;
       }
 
       if (totalFare >= 100) {
         if (totalFare > 100) {
-          let payalbeAmount = 100 - obj[i - 1].totalFare;
+          let payalbeAmount = 100 - singleDayIndividualTrip[i - 1].totalFare;
 
           if (payalbeAmount < 0) {
             payalbeAmount = 0;
           }
-          let info = `Daily Cap reached 100 reached for zone 1-1 charged ${payalbeAmount} instead of  ${calculatedFare}`;
+          let info = `Daily Cap of 100 reached for zone 1-1 charged ${payalbeAmount} instead of  ${calculatedFare}`;
 
           let newTrip = {
             ...trip,
@@ -504,7 +506,7 @@ let weeklyCap:any = Object.values(finRes).reduce((obj:any, dayTrip:any) => {
             dailyCapReached: true,
             dailyCapLimit
           };
-          obj.push(newTrip);
+          singleDayIndividualTrip.push(newTrip);
         } else {
           let info = `Daily Cap  100  reached for zone 1-1 `;
           let newTrip = {
@@ -516,21 +518,26 @@ let weeklyCap:any = Object.values(finRes).reduce((obj:any, dayTrip:any) => {
               dailyCapReached: true,
             dailyCapLimit
           };
-          obj.push(newTrip);
+          singleDayIndividualTrip.push(newTrip);
         }
       } else {
         let newTrip = { ...trip, totalFare };
-        obj.push(newTrip);
+        singleDayIndividualTrip.push(newTrip);
       }
     }
-    return obj;
+    return singleDayIndividualTrip;
   }, []);
 
   dailySpendArr.push(dailySpend);
 
-  // console.log("daily spend",dailySpend)
+  // daily spend end
+
+
+    
+    
+
+  //singleDayResult
   let singleTripResult = dayTrip.reduce((singleTripObj:any, singleTripRes:any) => {
-    // console.log(singleTripRes,"trip is")
 
     if (weeklyIsInterZone(dayTrip)) {
       let { from, to, dateTime, calculatedFare } = singleTripRes;
@@ -597,7 +604,7 @@ let weeklyCap:any = Object.values(finRes).reduce((obj:any, dayTrip:any) => {
 
   // let singleTrip={...singleTripResult}
   obj.push(singleTripResult);
-  if (dailySpendArr.length === Object.values(finRes).length) {
+  if (dailySpendArr.length === Object.values(weekToDayAggregation).length) {
     // final vlaue day wise
     // console.log("daily aarr",dailySpendArr);
 this.dailyTrip = dailySpendArr;
@@ -612,17 +619,17 @@ this.dailyTrip = dailySpendArr;
 
     
 let newList:any = [];
-// console.log(weeklyCap)
+// console.log(weeklyCapObject)
 
 //   console.log("RR IS",(getWeekArr))
 
-let newArr = weeklyCap.forEach((tr:any, ind:number) => {
+let getWeekArr:any = weeklyCapObject.reduce((newArr:any, wc:any) => {
+  // console.log(Object.values(wc)[0])
+  newArr.push(Object.values(wc)[0]);
+  return newArr;
+}, []);
+let newArr = weeklyCapObject.forEach((tr:any, ind:number) => {
   let payalbeAmount;
-  let getWeekArr:any = weeklyCap.reduce((newArr:any, wc:any) => {
-    // console.log(Object.values(wc)[0])
-    newArr.push(Object.values(wc)[0]);
-    return newArr;
-  }, []);
 
 
   let { dailyCapLimit, calculatedFare, zones } :any= Object.values(tr)[0];
@@ -653,9 +660,9 @@ let weeklyCapLimit
           payalbeAmount = 0;
         }
         weeklyCapLimit=600
-        info = `Weekly Cap of 600 reached charged ${payalbeAmount} instead of ${calculatedFare}  reached`;
+        info = `Weekly Cap of 600 reached. charged ${payalbeAmount} instead of ${calculatedFare} `;
       } else {
-        info = "Weekly Cap of 600 reached   ";
+        info = "Weekly Cap of 600 reached.";
       }
     }
   } else if (weeklyIsSomeZone2(getWeekArr)) {
@@ -666,9 +673,9 @@ let weeklyCapLimit
           payalbeAmount = 0;
         }
         weeklyCapLimit=400
-        info = `Weekly Cap of 400 reached charged ${payalbeAmount} instead of ${calculatedFare}  reached`;
+        info = `Weekly Cap of 400 reached. charged ${payalbeAmount} instead of ${calculatedFare}`;
       } else {
-        info = "Weekly Cap of 400 reached   ";
+        info = "Weekly Cap of 400 reached.";
       }
     }
   } else if (weeklyIsAllZone1(getWeekArr)) {
@@ -679,9 +686,9 @@ let weeklyCapLimit
           payalbeAmount = 0;
         }
         weeklyCapLimit=500
-        info = `Weekly Cap of 500 reached charged ${payalbeAmount} instead of ${calculatedFare}  reached`;
+        info = `Weekly Cap of 500 reached. charged ${payalbeAmount} instead of ${calculatedFare}`;
       } else {
-        info = "Weekly Cap of 500 reached   ";
+        info = "Weekly Cap of 500 reached.";
       }
 
       // info="Weekly Cap of 500 reached  reached"
@@ -713,7 +720,7 @@ let amtarrObj:any=Object.values(tr)[0]
   };
   tr = newCap;
   newList.push(newCap);
-  if (newList.length === weeklyCap.length) {
+  if (newList.length === weeklyCapObject.length) {
     //   final weekly val
       this.weeklyTrip = newList;
     // console.log("weekly fare", newList);
@@ -725,24 +732,67 @@ let amtarrObj:any=Object.values(tr)[0]
 
       
     dayTotalFareCount(data:any){
+      let lastObject = data[data.length - 1]
 
-let lastObject=data[data.length-1]
+    
+    let isWeeklyLimitReached = this.weeklyTrip.find((singleDay:any) => {
+  let weekDay = singleDay.dateTime.split("T")[0];
+  let currentDay = lastObject.dateTime.split("T")[0];
+      return weekDay===currentDay
+    })?.weeklyCapLimit
+    
+
+      if (isWeeklyLimitReached) {
+  return 0
+}
+
+
 if(lastObject.dailyCapReached){
   return lastObject.dailyCapLimit
 }else{
   return lastObject.totalFare
 }
 
-
-
-    }
-
+ }
 
   dateFormatter(date:any) {
     return new Date(date).toLocaleString()
   }
 
-
+  singleTripWeeklyFareChecker(trip:any) {
+    // console.log(trip.dateTime)
+    
+    let isWeeklyLimitReached = this.weeklyTrip.find((singleDay:any) => {
+  let weekDay = singleDay.dateTime.split("T")[0];
+  let currentDay = trip.dateTime.split("T")[0];
+      return weekDay===currentDay
+    })?.weeklyCapLimit
+    
+if(isWeeklyLimitReached){
+  return 0
+}
+    return trip.calculatedFare
+    
+  }
+  
+  
+  singleTripWeeklySavedChecker(trip:any) {
+    // console.log(trip.dateTime)
+    
+    let isWeeklyLimitReached = this.weeklyTrip.find((singleDay:any) => {
+  let weekDay = singleDay.dateTime.split("T")[0];
+  let currentDay = trip.dateTime.split("T")[0];
+      return weekDay===currentDay
+    })?.weeklyCapLimit
+    
+if(isWeeklyLimitReached){
+  return trip.calculatedFare
+}
+    return trip.saved
+    
+  }
+  
+  
 
 
 
